@@ -1,7 +1,11 @@
 <template>
-  <v-container fluid>
-    <Login />
-  </v-container>
+  <v-app>
+    <v-main>
+      <v-container fluid>
+        <Login />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script lang="ts">

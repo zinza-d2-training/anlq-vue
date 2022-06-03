@@ -6,17 +6,25 @@
       </v-col>
       <v-col cols="6" class="login--row--col">
         <form class="login--row--col--form">
-          <p>Chào mừng trở lại</p>
-          <h1>Đăng nhập vào tài khoản</h1>
+          <p class="text-left">Chào mừng trở lại</p>
+          <h2 class="text-left pb-3">Đăng nhập vào tài khoản</h2>
           <div class="login--row--col--form--input">
-            <label for="email">Email</label>
-            <input type="email" name="email" placeholder="admin@gmail.com" />
+            <label for="email" class="d-flex">Email</label>
+            <v-text-field
+              outlined
+              type="email"
+              name="email"
+              placeholder="admin@gmail.com"></v-text-field>
           </div>
           <div class="login--row--col--form--input">
-            <label for="password">Mật khẩu</label>
-            <input type="password" name="password" placeholder="*********" />
+            <label for="password" class="d-flex">Mật khẩu</label>
+            <v-text-field
+              type="password"
+              name="password"
+              outlined
+              placeholder="**************"></v-text-field>
           </div>
-          <a>Quên mật khẩu?</a>
+          <a class="float-right py-2">Quên mật khẩu?</a>
           <button>Đăng nhập</button>
         </form>
       </v-col>
@@ -47,33 +55,10 @@ export default class Login extends Vue {}
       }
 
       &--form {
-        width: 350px;
-        overflow: hidden;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-
-        &--input {
-          margin-top: 15px;
-
-          label {
-            display: flex;
-          }
-          input {
-            border: 1px solid #b3b3b373;
-            padding: 12px 10px;
-            margin: 10px 0px;
-            border-radius: 5px;
-            width: 100%;
-            overflow: hidden;
-          }
-        }
-
-        a {
-          margin: 15px 0px;
-          float: right;
-        }
 
         button {
           color: white;
