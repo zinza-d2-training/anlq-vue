@@ -3,10 +3,10 @@
     <div v-if="!isLoading">
       <h2 class="text-center">Thông tin user</h2>
       <ul>
-        <li>Name: {{ user.name }}</li>
-        <li>Username: {{ user.username }}</li>
-        <li>Email: {{ user.email }}</li>
-        <li>Phone: {{ user.phone }}</li>
+        <li>Name: {{ userInfo.name }}</li>
+        <li>Username: {{ userInfo.username }}</li>
+        <li>Email: {{ userInfo.email }}</li>
+        <li>Phone: {{ userInfo.phone }}</li>
       </ul>
     </div>
     <div v-else>
@@ -17,7 +17,6 @@
 
 <script lang="ts">
 import { UserAction } from '@/store/user/actions';
-import { UserState } from '@/store/user/type';
 import axios from 'axios';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapState } from 'vuex';
@@ -28,34 +27,29 @@ import { delay } from '../utils/common';
     ...mapState({ user: (state) => state })
   },
   methods: {
-    ...mapActions(['user/addUserInfo'])
+    ...mapActions([UserAction.ADD_USER_INFO])
   }
 })
 export default class User extends Vue {
   $store: any;
   isLoading: boolean = true;
-  user!: UserState;
+  userInfo: any;
+  // eslint-disable-next-line no-unused-vars
+  [UserAction.ADD_USER_INFO]: (userInfo: any) => void;
 
   async getUserInfo() {
     try {
       await delay(5000);
       let id = localStorage.getItem('token');
-      axios
-        .get('https://jsonplaceholder.typicode.com/users')
-        .then((response) => {
-          response.data.forEach((element: any) => {
-            if (element.id == id) {
-              this.user.name = element.name;
-              this.user.username = element.username;
-              this.user.phone = element.phone;
-              this.user.email = element.email;
-              this.$store.dispatch(UserAction.ADD_USER_INFO, this.user);
-              this.isLoading = false;
-              return;
-            }
-          });
-        })
-        .catch((error) => console.log(error));
+      let response = await axios.get('https://jsonplaceholder.typicode.com/users');
+      response.data.forEach((element: any) => {
+        if (element.id == id) {
+          this.userInfo = element;
+          this[UserAction.ADD_USER_INFO](element);
+          this.isLoading = false;
+          return;
+        }
+      });
     } catch (error) {
       console.log(error);
     }

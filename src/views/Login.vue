@@ -92,14 +92,18 @@ export default class Login extends Vue {
   $store: any;
   user!: UserState;
   isLoading: boolean = false;
+  // eslint-disable-next-line no-unused-vars
+  [UserMutation.SET_USER]: (user: UserState) => void;
+  // eslint-disable-next-line no-unused-vars
+  [UserMutation.SET_TOKEN]: (token: string) => void;
 
   async submitForm() {
     try {
       this.isLoading = true;
       let token = '2';
       localStorage.setItem('token', token);
-      this.$store.commit(UserMutation.SET_USER, this.user);
-      this.$store.commit(UserMutation.SET_TOKEN, token);
+      this[UserMutation.SET_USER](this.user);
+      this[UserMutation.SET_TOKEN](token);
       await delay(5000);
       this.isLoading = false;
       this.$router.push('/user');
