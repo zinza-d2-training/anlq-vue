@@ -8,7 +8,7 @@ export enum UserAction {
 }
 
 export const actions: ActionTree<UserState, RootState> = {
-  [UserAction.ADD_USER_INFO]({ state, commit }, userInfo) {
+  [UserAction.ADD_USER_INFO]({ commit }, userInfo: UserState) {
     commit(UserMutation.SET_INFO, userInfo);
   }
 };

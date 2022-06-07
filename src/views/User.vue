@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import { UserAction } from '@/store/user/actions';
+import { UserState } from '@/store/user/type';
 import axios from 'axios';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapState } from 'vuex';
@@ -33,9 +34,9 @@ import { delay } from '../utils/common';
 export default class User extends Vue {
   $store: any;
   isLoading: boolean = true;
-  userInfo: any;
+  userInfo!: UserState;
   // eslint-disable-next-line no-unused-vars
-  [UserAction.ADD_USER_INFO]: (userInfo: any) => void;
+  [UserAction.ADD_USER_INFO]: (userInfo: UserState) => void;
 
   async getUserInfo() {
     try {
