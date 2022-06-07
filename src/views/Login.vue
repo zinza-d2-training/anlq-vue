@@ -1,5 +1,5 @@
 <template>
-  <v-container class="login">
+  <div class="login">
     <v-row no-gutters class="login__row">
       <v-col cols="6" class="login__row__col">
         <img src="../assets/images/login.png" alt="login" class="login__row__col__image" />
@@ -40,7 +40,7 @@
         </ValidationObserver>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -116,10 +116,6 @@ export default class Login extends Vue {
 <style lang="scss" scoped>
 .login {
   &__row {
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 0 10px #c9c9c9;
-
     &__col {
       position: relative;
 

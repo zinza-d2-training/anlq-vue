@@ -1,5 +1,5 @@
 <template>
-  <v-container class="forgot-password">
+  <div class="forgot-password">
     <v-row no-gutters class="forgot-password__row">
       <v-col cols="6" class="forgot-password__row__col">
         <img
@@ -9,10 +9,12 @@
       </v-col>
       <v-col cols="6" class="forgot-password__row__col">
         <h2 class="text-center">Quên mật khẩu</h2>
-        <router-link to="/login" class="text-center">Quay trở lại trang đăng nhập</router-link>
+        <p class="text-center">
+          <router-link to="/login">Quay trở lại trang đăng nhập</router-link>
+        </p>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -25,10 +27,6 @@ export default class ForgotPassword extends Vue {}
 <style lang="scss" scoped>
 .forgot-password {
   &__row {
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 0 10px #c9c9c9;
-
     &__col {
       &__image {
         width: 100%;
