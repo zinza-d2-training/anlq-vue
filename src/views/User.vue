@@ -10,7 +10,7 @@
       </ul>
     </div>
     <div v-else>
-      <h2>Loading.....</h2>
+      <h2 class="text-center">Loading.....</h2>
     </div>
   </v-container>
 </template>
@@ -21,6 +21,7 @@ import { UserState } from '@/store/user/type';
 import axios from 'axios';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapState } from 'vuex';
+import { delay } from '../utils/common';
 
 @Component({
   computed: {
@@ -35,33 +36,29 @@ export default class User extends Vue {
   isLoading: boolean = true;
   user!: UserState;
 
-  delay(time: number) {
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, time);
-    });
-  }
-
   async getUserInfo() {
-    await this.delay(5000);
-    let id = localStorage.getItem('token');
-    axios
-      .get('https://jsonplaceholder.typicode.com/users')
-      .then((response) => {
-        response.data.forEach((element: any) => {
-          if (element.id == id) {
-            this.user.name = element.name;
-            this.user.username = element.username;
-            this.user.phone = element.phone;
-            this.user.email = element.email;
-            this.$store.dispatch(UserAction.ADD_USER_INFO, this.user);
-            this.isLoading = false;
-            return;
-          }
-        });
-      })
-      .catch((error) => console.log(error));
+    try {
+      await delay(5000);
+      let id = localStorage.getItem('token');
+      axios
+        .get('https://jsonplaceholder.typicode.com/users')
+        .then((response) => {
+          response.data.forEach((element: any) => {
+            if (element.id == id) {
+              this.user.name = element.name;
+              this.user.username = element.username;
+              this.user.phone = element.phone;
+              this.user.email = element.email;
+              this.$store.dispatch(UserAction.ADD_USER_INFO, this.user);
+              this.isLoading = false;
+              return;
+            }
+          });
+        })
+        .catch((error) => console.log(error));
+    } catch (error) {
+      console.log(error);
+    }
   }
   mounted() {
     this.getUserInfo();

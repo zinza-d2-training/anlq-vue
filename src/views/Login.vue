@@ -50,6 +50,7 @@ import { required, min, regex, numeric } from 'vee-validate/dist/rules';
 import { mapMutations, mapState } from 'vuex';
 import { UserMutation } from '../store/user/mutations';
 import { UserState } from '../store/user/type';
+import { delay } from '../utils/common';
 
 extend('required', {
   ...required,
@@ -92,34 +93,38 @@ export default class Login extends Vue {
   user!: UserState;
   isLoading: boolean = false;
 
-  delay(time: number) {
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, time);
-    });
-  }
-
   async submitForm() {
-    this.isLoading = true;
-    let token = '2';
-    localStorage.setItem('token', token);
-    this.$store.commit(UserMutation.SET_USER, this.user);
-    this.$store.commit(UserMutation.SET_TOKEN, token);
-    await this.delay(5000);
-    this.isLoading = false;
-    this.$router.push('/user');
+    try {
+      this.isLoading = true;
+      let token = '2';
+      localStorage.setItem('token', token);
+      this.$store.commit(UserMutation.SET_USER, this.user);
+      this.$store.commit(UserMutation.SET_TOKEN, token);
+      await delay(5000);
+      this.isLoading = false;
+      this.$router.push('/user');
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .login {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+
   &__row {
+    height: 100%;
+    width: 100%;
+
     &__col {
       position: relative;
 
       &__image {
+        position: absolute;
         width: 100%;
         height: 100%;
       }
