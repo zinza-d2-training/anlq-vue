@@ -1,22 +1,15 @@
 <template>
   <v-app>
     <v-main>
-      <v-container fluid>
-        <Login />
-      </v-container>
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import Login from './views/Login.vue';
 
-@Component({
-  components: {
-    Login
-  }
-})
+@Component({})
 export default class App extends Vue {}
 </script>
 
