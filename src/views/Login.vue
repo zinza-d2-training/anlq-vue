@@ -1,46 +1,41 @@
 <template>
-  <div class="login">
-    <v-row no-gutters class="login__row">
-      <v-col cols="6" class="login__row__col">
-        <img src="../assets/images/login.png" alt="login" class="login__row__col__image" />
-      </v-col>
-      <v-col cols="6" class="login__row__col">
-        <ValidationObserver v-slot="{ invalid }">
-          <form @submit.prevent="submitForm" class="login__row__col__form">
-            <p class="text-left">Chào mừng trở lại</p>
-            <h2 class="text-left pb-3">Đăng nhập vào tài khoản</h2>
-            <ValidationProvider rules="required|numeric|validateCMND" v-slot="{ errors }">
-              <div class="login__row__col__form__input">
-                <label for="cmnd" class="d-flex">Chứng minh nhân dân/Căn cước công dân</label>
-                <v-text-field
-                  v-model="user.cmnd"
-                  outlined
-                  type="text"
-                  name="cmnd"
-                  placeholder="123456789"></v-text-field>
-                <span class="login__row__col__form__input--error">{{ errors[0] }}</span>
-              </div>
-            </ValidationProvider>
-            <ValidationProvider rules="required|min:8|regex:^\S+$" v-slot="{ errors }">
-              <div class="login__row__col__form__input">
-                <label for="password" class="d-flex">Mật khẩu</label>
-                <v-text-field
-                  v-model="user.password"
-                  type="password"
-                  name="password"
-                  outlined
-                  placeholder="**************"></v-text-field>
-                <span class="login__row__col__form__input--error">{{ errors[0] }}</span>
-              </div>
-            </ValidationProvider>
+  <AccountLayout>
+    <div class="login">
+      <ValidationObserver v-slot="{ invalid }">
+        <form @submit.prevent="submitForm" class="login__form">
+          <p class="text-left">Chào mừng trở lại</p>
+          <h2 class="text-left pb-3">Đăng nhập vào tài khoản</h2>
+          <ValidationProvider rules="required|numeric|validateCMND" v-slot="{ errors }">
+            <div class="login__form__input">
+              <label for="cmnd" class="d-flex">Chứng minh nhân dân/Căn cước công dân</label>
+              <v-text-field
+                v-model="user.cmnd"
+                outlined
+                type="text"
+                name="cmnd"
+                :error-messages="errors[0]"
+                placeholder="123456789"></v-text-field>
+            </div>
+          </ValidationProvider>
+          <ValidationProvider rules="required|min:8|regex:^\S+$" v-slot="{ errors }">
+            <div class="login__form__input">
+              <label for="password" class="d-flex">Mật khẩu</label>
+              <v-text-field
+                v-model="user.password"
+                type="password"
+                name="password"
+                outlined
+                :error-messages="errors[0]"
+                placeholder="**************"></v-text-field>
+            </div>
+          </ValidationProvider>
 
-            <router-link to="forgot-password" class="float-right py-2">Quên mật khẩu?</router-link>
-            <button :disabled="invalid || isLoading">Đăng nhập</button>
-          </form>
-        </ValidationObserver>
-      </v-col>
-    </v-row>
-  </div>
+          <router-link to="forgot-password" class="float-right py-2">Quên mật khẩu?</router-link>
+          <button :disabled="invalid || isLoading">Đăng nhập</button>
+        </form>
+      </ValidationObserver>
+    </div>
+  </AccountLayout>
 </template>
 
 <script lang="ts">
@@ -51,6 +46,7 @@ import { mapMutations, mapState } from 'vuex';
 import { UserMutation } from '../store/user/mutations';
 import { UserState } from '../store/user/type';
 import { delay } from '../utils/common';
+import AccountLayout from '../layout/AccountLayout.vue';
 
 extend('required', {
   ...required,
@@ -80,6 +76,9 @@ extend('validateCMND', {
 });
 
 @Component({
+  components: {
+    AccountLayout
+  },
   computed: {
     ...mapState({ user: (state) => state })
   },
@@ -116,44 +115,18 @@ export default class Login extends Vue {
 
 <style lang="scss" scoped>
 .login {
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
+  &__form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-  &__row {
-    height: 100%;
-    width: 100%;
-
-    &__col {
-      position: relative;
-
-      &__image {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-      }
-
-      &__form {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
-        button {
-          color: white;
-          background: #5bcd6e;
-          width: 100%;
-          border-radius: 5px;
-          padding: 11px;
-        }
-
-        &__input {
-          &--error {
-            color: red;
-            font-size: 12px;
-          }
-        }
-      }
+    button {
+      color: white;
+      background: #5bcd6e;
+      width: 100%;
+      border-radius: 5px;
+      padding: 11px;
     }
   }
 }
