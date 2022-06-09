@@ -29,11 +29,9 @@ export default class AccountLayout extends Vue {}
     width: 100%;
 
     &__col {
-      position: relative;
-
       &__image {
-        position: absolute;
-        width: 100%;
+        position: fixed;
+        width: 50%;
         height: 100%;
       }
     }
