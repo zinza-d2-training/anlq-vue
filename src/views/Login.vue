@@ -31,7 +31,13 @@
           </ValidationProvider>
 
           <router-link to="forgot-password" class="float-right py-2">Quên mật khẩu?</router-link>
-          <button :disabled="invalid || isLoading">Đăng nhập</button>
+          <v-btn type="submit" :disabled="invalid || isLoading" color="green" class="white--text">
+            Đăng nhập
+          </v-btn>
+          <p class="py-6">Hoặc đăng ký tài khoản, nếu chưa đăng ký!</p>
+          <router-link to="register">
+            <v-btn outlined color="green"> Đăng ký </v-btn>
+          </router-link>
         </form>
       </ValidationObserver>
     </div>
@@ -40,40 +46,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { extend } from 'vee-validate';
-import { required, min, regex, numeric } from 'vee-validate/dist/rules';
 import { mapMutations, mapState } from 'vuex';
 import { UserMutation } from '../store/user/mutations';
 import { UserState } from '../store/user/type';
 import { delay } from '../utils/common';
 import AccountLayout from '../layout/AccountLayout.vue';
-
-extend('required', {
-  ...required,
-  message: 'Trường này không được để trống.'
-});
-
-extend('min', {
-  ...min,
-  message: 'Mật khẩu ít nhất phải có 8 ký tự.'
-});
-
-extend('regex', {
-  ...regex,
-  message: 'Trường này không được chứa dấu cách.'
-});
-
-extend('numeric', {
-  ...numeric,
-  message: 'Trường này chỉ bao gồm các số.'
-});
-
-extend('validateCMND', {
-  validate: (value) => {
-    return value.length == 9 || value.length == 12;
-  },
-  message: 'Hãy nhập CMND 9 hoặc CCCD 12 số'
-});
 
 @Component({
   components: {
@@ -115,18 +92,20 @@ export default class Login extends Vue {
 
 <style lang="scss" scoped>
 .login {
-  &__form {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 
+  &__form {
     button {
-      color: white;
-      background: #5bcd6e;
       width: 100%;
       border-radius: 5px;
       padding: 11px;
+    }
+
+    a {
+      text-decoration: none;
     }
   }
 }
