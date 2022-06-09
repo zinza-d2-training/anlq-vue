@@ -12,7 +12,9 @@ const state: UserState = {
   name: '',
   username: '',
   email: '',
-  phone: ''
+  phone: '',
+  gender: '',
+  dateOfBirth: ''
 };
 
 export const user: Module<UserState, RootState> = {

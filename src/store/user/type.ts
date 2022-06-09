@@ -6,4 +6,6 @@ export interface UserState {
   username: string;
   phone: string;
   email: string;
+  gender: string;
+  dateOfBirth: string;
 }
