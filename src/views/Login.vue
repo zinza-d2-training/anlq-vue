@@ -78,11 +78,12 @@ export default class Login extends Vue {
       this.isLoading = true;
       let token = '2';
       localStorage.setItem('token', token);
+      localStorage.setItem('username', 'Nguyễn Văn A');
       this[UserMutation.SET_USER](this.user);
       this[UserMutation.SET_TOKEN](token);
       await delay(5000);
       this.isLoading = false;
-      this.$router.push('/user');
+      this.$router.push('/');
     } catch (error) {
       console.log(error);
     }
