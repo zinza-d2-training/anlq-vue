@@ -126,6 +126,7 @@ import {
   CategoryScale,
   PointElement
 } from 'chart.js';
+import { DataTable, District, HeaderTableData, Province, Ward } from '@/type/address';
 
 ChartJS.register(Title, Tooltip, Legend, LineElement, LinearScale, CategoryScale, PointElement);
 
@@ -153,31 +154,32 @@ export default class Home extends Vue {
     maintainAspectRatio: false
   };
 
-  headerTableData: any = headerTableData;
-  dataTables: any = dataTables;
+  headerTableData: HeaderTableData[] = headerTableData;
+  dataTables: DataTable[] = dataTables;
   page: number = 1;
   pageCount: number = 0;
   itemsPerPage: number = 2;
-  selectProvince: any = null;
-  selectDistrict: any = null;
-  selectWard: any = null;
-  provinceData: any = addressData;
+  selectProvince: Province | null = null;
+  selectDistrict: District | null = null;
+  selectWard: Ward | null = null;
+  provinceData: Province[] = addressData;
 
-  showDataTables: any = this.dataTables.map((item: any) => {
+  showDataTables: DataTable[] = this.dataTables.map((item: DataTable) => {
     return { ...item };
   });
 
-  get districtData(): any {
+  get districtData(): District[] | null {
     this.selectDistrict = null;
     return this.selectProvince?.districts ?? null;
   }
 
-  get wardData(): any {
+  get wardData(): Ward[] | null {
+    this.selectWard = null;
     return this.selectDistrict?.wards ?? null;
   }
 
   searchDataByAddress() {
-    this.showDataTables = this.dataTables.filter((item: any) => {
+    this.showDataTables = this.dataTables.filter((item: DataTable) => {
       if (this.selectDistrict?.id == null && this.selectWard?.id == null) {
         return item.province.id == this.selectProvince?.id;
       } else if (this.selectWard?.id == null) {

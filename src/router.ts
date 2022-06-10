@@ -8,12 +8,13 @@ import Register from './views/Register.vue';
 
 Vue.use(VueRouter);
 
-export const router = new VueRouter({
+const router = new VueRouter({
   mode: 'history',
   routes: [
     {
       path: '/',
-      component: Home as ComponentOptions<Vue>
+      component: Home as ComponentOptions<Vue>,
+      meta: { requiresAuth: true }
     },
     {
       path: '/login',
@@ -33,3 +34,16 @@ export const router = new VueRouter({
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!localStorage.getItem('token')) {
+      next('/login');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+export default router;

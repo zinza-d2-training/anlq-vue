@@ -1,4 +1,6 @@
-export const labelDate = [
+import { Province, DataTable, HeaderTableData } from '@/type/address';
+
+export const labelDate: string[] = [
   '10/05',
   '11/05',
   '12/05',
@@ -29,13 +31,13 @@ export const labelDate = [
   '06/06'
 ];
 
-export const dataDate = [
+export const dataDate: number[] = [
   257013, 184428, 186901, 282161, 164700, 79454, 338133, 201046, 559443, 658999, 247410, 39415,
   35735, 177957, 540752, 344891, 310420, 193904, 85168, 59240, 380080, 234456, 165808, 99936,
   226430, 138755, 49776, 179830
 ];
 
-export const addressData = [
+export const addressData: Province[] = [
   {
     id: 1,
     name: 'Thành phố Hà Nội',
@@ -96,7 +98,7 @@ export const addressData = [
   }
 ];
 
-export const headerTableData = [
+export const headerTableData: HeaderTableData[] = [
   {
     text: 'STT',
     value: 'id'
@@ -137,7 +139,7 @@ export const headerTableData = [
   }
 ];
 
-export const dataTables = [
+export const dataTables: DataTable[] = [
   {
     id: 1,
     name: 'Trạm ý thế Phường Phúc Xá',
