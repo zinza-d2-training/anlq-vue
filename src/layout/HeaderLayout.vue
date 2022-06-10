@@ -57,15 +57,47 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import axios from 'axios';
+import { mapActions, mapState } from 'vuex';
+import { UserAction } from '@/store/user/actions';
+import { UserState } from '@/store/user/type';
+import { delay } from '@/utils/common';
 
 @Component({
   computed: {
-    username: function () {
-      return localStorage.getItem('username');
-    }
+    ...mapState({ user: (state) => state })
+  },
+  methods: {
+    ...mapActions([UserAction.ADD_USER_INFO])
   }
 })
-export default class HeaderLayout extends Vue {}
+export default class HeaderLayout extends Vue {
+  username: string | null = null;
+  $store: any;
+  userInfo!: UserState;
+  // eslint-disable-next-line no-unused-vars
+  [UserAction.ADD_USER_INFO]: (user: UserState) => void;
+
+  async getUserInfo() {
+    try {
+      await delay(5000);
+      let id = localStorage.getItem('token');
+      let response = await axios.get('https://jsonplaceholder.typicode.com/users');
+      response.data.forEach((element: any) => {
+        if (element.id == id) {
+          this[UserAction.ADD_USER_INFO](element);
+          return;
+        }
+      });
+      this.username = this.$store.state.user.username;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  mounted() {
+    this.getUserInfo();
+  }
+}
 </script>
 
 <style lang="scss" scoped>
